@@ -43,6 +43,7 @@ class EchoHandler(http.server.BaseHTTPRequestHandler):
     do_PUT = command_handler
 
 if __name__ == "__main__":
+    # FIXME: add options parser
     port = 8080
     server = http.server.HTTPServer(('', port), EchoHandler)
     server.serve_forever()
