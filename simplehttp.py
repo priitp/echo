@@ -1,5 +1,11 @@
 #!/usr/bin/env python
 
+# This is basic HTTP echo server. It is mostly usable for inspecting
+# incoming requests.
+#
+# curl -s -H "X-Hello: World!" IP:PORT
+#
+
 import BaseHTTPServer
 import SimpleHTTPServer
 import SocketServer
