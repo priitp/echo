@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # This is basic HTTP echo server. It is mostly usable for inspecting
 # incoming requests.
@@ -6,16 +6,12 @@
 # curl -s -H "X-Hello: World!" IP:PORT
 #
 
-import BaseHTTPServer
-import SimpleHTTPServer
-import SocketServer
+import http.server
 import logging
 
-class EchoHandler(BaseHTTPServer.BaseHTTPRequestHandler):
-    # Str8 from the Python logging tutorial.
-    # FIXME: Turn it into proper __init__ function: load time execution might
-    # not be best solution in the longer perspective.
+class EchoHandler(http.server.BaseHTTPRequestHandler):
 
+    # Str8 from the Python logging tutorial.
     logger = logging.getLogger('EchoHandler')
     logger.setLevel(logging.DEBUG)
     console_handler = logging.StreamHandler()
@@ -23,23 +19,29 @@ class EchoHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     console_handler.setFormatter(formatter)
     logger.addHandler(console_handler)
+
+    
     def do_GET(self):
-        self.logger.info("Handling GET:")
+        self.logger.info("Handling GET")
         self.logger.info("request path = '{}'".format(self.path))
         self.logger.info("headers = {}".format(self.headers))
         self.logger.info("GET done.")
         self.send_response(200)
         self.send_header("Set-Cookie", "hello=simplehttp")
         self.end_headers()
+
     def do_POST(self):
-        self.logger.info("Handling POST:")
+        self.logger.info("Handling POST")
         self.logger.info("request path = '{}'".format(self.path))
         self.logger.info("headers = '{}'".format(self.headers))
-        self.logger.info("GET done.")
+        self.logger.info("POST done.")
         self.send_response(200)
         self.end_headers()
-    
+
+    do_DELETE = do_GET
+    do_PUT = do_POST
+
 if __name__ == "__main__":
     port = 8080
-    server = BaseHTTPServer.HTTPServer(('', port), EchoHandler)
+    server = http.server.HTTPServer(('', port), EchoHandler)
     server.serve_forever()
