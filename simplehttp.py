@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
 # This is basic HTTP echo server. It is mostly usable for inspecting
-# incoming requests.
+# incoming requests. Loosely based on this:
+# https://gist.github.com/huyng/814831
 #
 # curl -s -H "X-Hello: World!" IP:PORT
+# curl -s -H "X-Hello: World!" -d @some/file IP:PORT
 #
 
 import http.server
