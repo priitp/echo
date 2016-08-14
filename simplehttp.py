@@ -7,18 +7,18 @@ import logging
 
 class EchoHandler(BaseHTTPRequestHandler):
     def do_GET(self):
-        logging.info("Handling GET:")
-        logging.info("request path = '{}'".format(self.path))
-        logging.info("headers = '{}'".format(self.headers))
-        logging.info("GET done.")
+        logging.warning("Handling GET:")
+        logging.warning("request path = '{}'".format(self.path))
+        logging.warning("headers = {}".format(self.headers))
+        logging.warning("GET done.")
         self.send_response(200)
-        self.send_cookie("Set-Cookie", "hello=simplehttp")
+        self.send_header("Set-Cookie", "hello=simplehttp")
         self.end_headers()
     def do_POST(self):
-        logging.info("Handling POST:")
-        logging.info("request path = '{}'".format(self.path))
-        logging.info("headers = '{}'".format(self.headers))
-        logging.info("GET done.")
+        logging.warning("Handling POST:")
+        logging.warning("request path = '{}'".format(self.path))
+        logging.warning("headers = '{}'".format(self.headers))
+        logging.warning("GET done.")
         self.send_response(200)
         self.end_headers()
     
