@@ -12,13 +12,17 @@ import SocketServer
 import logging
 
 class EchoHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+    # Str8 from the Python logging tutorial.
+    # FIXME: Turn it into proper __init__ function: load time execution might
+    # not be best solution in the longer perspective.
+
     logger = logging.getLogger('EchoHandler')
     logger.setLevel(logging.DEBUG)
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.DEBUG)
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.DEBUG)
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    ch.setFormatter(formatter)
-    logger.addHandler(ch)
+    console_handler.setFormatter(formatter)
+    logger.addHandler(console_handler)
     def do_GET(self):
         self.logger.info("Handling GET:")
         self.logger.info("request path = '{}'".format(self.path))
