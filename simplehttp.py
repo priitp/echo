@@ -34,6 +34,10 @@ class EchoHandler(http.server.BaseHTTPRequestHandler):
         self.logger.info("Handling POST")
         self.logger.info("request path = '{}'".format(self.path))
         self.logger.info("headers = '{}'".format(self.headers))
+
+        content_length = int(self.headers['Content-Length'])
+        self.logger.info("POST data = {}".format(self.rfile.read(content_length)))
+
         self.logger.info("POST done.")
         self.send_response(200)
         self.end_headers()
