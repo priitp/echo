@@ -23,29 +23,24 @@ class EchoHandler(http.server.BaseHTTPRequestHandler):
     logger.addHandler(console_handler)
 
     
-    def do_GET(self):
-        self.logger.info("Handling GET")
+    def command_handler(self):
+        self.logger.info("Handling {}".format(self.command))
         self.logger.info("request path = '{}'".format(self.path))
         self.logger.info("headers = {}".format(self.headers))
-        self.logger.info("GET done.")
+
+        if self.command in {'POST', 'PUT'}:
+            content_length = int(self.headers['Content-Length'])
+            self.logger.info("POST data = {}".format(self.rfile.read(content_length)))
+
+        self.logger.info("{} done.".format(self.command))
         self.send_response(200)
         self.send_header("Set-Cookie", "hello=simplehttp")
         self.end_headers()
 
-    def do_POST(self):
-        self.logger.info("Handling POST")
-        self.logger.info("request path = '{}'".format(self.path))
-        self.logger.info("headers = '{}'".format(self.headers))
-
-        content_length = int(self.headers['Content-Length'])
-        self.logger.info("POST data = {}".format(self.rfile.read(content_length)))
-
-        self.logger.info("POST done.")
-        self.send_response(200)
-        self.end_headers()
-
-    do_DELETE = do_GET
-    do_PUT = do_POST
+    do_GET = command_handler
+    do_POST = command_handler
+    do_DELETE = command_handler
+    do_PUT = command_handler
 
 if __name__ == "__main__":
     port = 8080
