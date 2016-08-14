@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
-from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
+import BaseHTTPServer
 import SimpleHTTPServer
 import SocketServer
 import logging
 
-class EchoHandler(BaseHTTPRequestHandler):
+class EchoHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     logger = logging.getLogger('EchoHandler')
     logger.setLevel(logging.DEBUG)
     ch = logging.StreamHandler()
@@ -31,5 +31,5 @@ class EchoHandler(BaseHTTPRequestHandler):
     
 if __name__ == "__main__":
     port = 8080
-    server = HTTPServer(('', port), EchoHandler)
+    server = BaseHTTPServer.HTTPServer(('', port), EchoHandler)
     server.serve_forever()
