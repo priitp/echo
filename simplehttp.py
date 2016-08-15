@@ -10,6 +10,9 @@
 
 import http.server
 import logging
+import argparse
+
+default_port = 8080
 
 class EchoHandler(http.server.BaseHTTPRequestHandler):
 
@@ -42,7 +45,10 @@ class EchoHandler(http.server.BaseHTTPRequestHandler):
     do_PUT = command_handler
 
 if __name__ == "__main__":
-    # FIXME: add options parser
-    port = 8080
-    server = http.server.HTTPServer(('', port), EchoHandler)
+    parser = argparse.ArgumentParser(description='Simple HTTP echo server.')
+    parser.add_argument('-p', dest='port', default=default_port, type=int, help='Port number')
+    parser.add_argument('-i', dest='interface', default='', help='Interface to bind to (default: all)')
+    args = parser.parse_args()
+
+    server = http.server.HTTPServer((args.interface, args.port), EchoHandler)
     server.serve_forever()
