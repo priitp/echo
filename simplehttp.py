@@ -22,7 +22,6 @@ class EchoHandler(http.server.BaseHTTPRequestHandler):
     console_handler.setFormatter(formatter)
     logger.addHandler(console_handler)
 
-    
     def command_handler(self):
         self.logger.info("Handling {}".format(self.command))
         self.logger.info("request path = '{}'".format(self.path))
