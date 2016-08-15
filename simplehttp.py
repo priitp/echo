@@ -13,6 +13,7 @@ import logging
 import argparse
 
 default_port = 8080
+default_interface = ''
 
 class EchoHandler(http.server.BaseHTTPRequestHandler):
 
@@ -47,7 +48,7 @@ class EchoHandler(http.server.BaseHTTPRequestHandler):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Simple HTTP echo server.')
     parser.add_argument('-p', dest='port', default=default_port, type=int, help='Port number')
-    parser.add_argument('-i', dest='interface', default='', help='Interface to bind to (default: all)')
+    parser.add_argument('-i', dest='interface', default=default_interface, help='Interface to bind to (default: {})'.format(default_interface))
     args = parser.parse_args()
 
     server = http.server.HTTPServer((args.interface, args.port), EchoHandler)
